@@ -8,6 +8,36 @@
 ```python
 from sklearn.model_selection import train_test_split
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+_________
+
+```output
+| R&D Spend  | Administration | Marketing Spend | State_Florida | State_New York | Profit     |
+|------------|---------------|----------------|---------------|---------------|------------|
+| 165349.2   | 136897.8      | 471784.1       | 0             | 1             | 192261.83  |
+| 162597.7   | 151377.59     | 443898.53      | 0             | 0             | 191792.06  |
+| 153441.51  | 101145.55     | 407934.54      | 1             | 0             | 191050.39  |
+| 144372.41  | 118671.85     | 383199.62      | 0             | 1             | 182901.99  |
+| 142107.34  | 91391.77      | 366168.42      | 1             | 0             | 166187.94  |
+```
+### Define Features (X) & Target (y)
+### Now, we separate independent features (X) and dependent variable (y = Profit).
+# Define independent variables (X) and dependent variable (y)
+```python
+X = df_encoded.drop(columns=['Profit'])  # Features
+y = df_encoded['Profit']  # Target variable
+```
+### Train-Test Split (80-20%)
+### We split the data into 80% training and 20% testing.
+# Import train-test split function
+``` python
+from sklearn.model_selection import train_test_split  
+
+# Split the data into training (80%) and testing (20%) sets
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+# Display dataset sizes
+X_train.shape, X_test.shape, y_train.shape, y_test.shape
 ```
 ### 3️⃣ Choose Regression Model
 `✅ Select a regression algorithm based on data characteristics:
@@ -19,12 +49,45 @@ Polynomial Regression (for non-linear trends).
 Decision Tree/Random Forest (for complex relationships).
 
 Lasso/Ridge Regression (for regularization)`.
+
+### 4️⃣ Train the Model
+✅ Fit the model to training data.
+#### `model.fit(X_train, y_train)`
+
 ```python
 from sklearn.linear_model import LinearRegression
 model = LinearRegression()
+Train Multiple Linear Regression Model
+Now, we train the model using Scikit-Learn.
 ```
-### 4️⃣ Train the Model
-`✅ Fit the model to training data.
-model.fit(X_train, y_train)`
+```python
+# Import Linear Regression
+from sklearn.linear_model import LinearRegression  
+
+# Initialize the model
+lr_model = LinearRegression()  
+
+# Train the model on training data
+lr_model.fit(X_train, y_train)  
+
+# Predict on both training & testing sets
+y_pred_train = lr_model.predict(X_train)  
+y_pred_test = lr_model.predict(X_test)
+```
+```python
+# Import necessary metrics
+from sklearn.metrics import mean_absolute_error, mean_squared_error  
+
+# Calculate Mean of Profit
+mean_profit = y_test.mean()
+
+# Calculate Errors
+mae = mean_absolute_error(y_test, y_pred_test)  # Mean Absolute Error
+mse = mean_squared_error(y_test, y_pred_test)  # Mean Squared Error
+rmse = mean_squared_error(y_test, y_pred_test, squared=False)  # Root Mean Squared Error
+
+# Display results
+mean_profit, mae, mse, rmse
+```
 
 
