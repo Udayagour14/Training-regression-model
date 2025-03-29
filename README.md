@@ -74,6 +74,7 @@ lr_model.fit(X_train, y_train)
 y_pred_train = lr_model.predict(X_train)  
 y_pred_test = lr_model.predict(X_test)
 ```
+
 ```python
 # Import necessary metrics
 from sklearn.metrics import mean_absolute_error, mean_squared_error  
@@ -89,5 +90,44 @@ rmse = mean_squared_error(y_test, y_pred_test, squared=False)  # Root Mean Squar
 # Display results
 mean_profit, mae, mse, rmse
 ```
+```output
+(112012.64, 7514.32, 81930549.19, 9055.96)
+```
+```✅ Interpretation:
+Mean Profit = $112,012.64 → Average company profit.
+MAE = $7,514.32 → On average, our predictions are $7,514 off.
+MSE = 81,930,549.19 → Squared error, sensitive to outliers.
+RMSE = $9,055.96 → On average, the error is around $9,056.
+```
+###  -------------------OR-----------------
+### Model Evaluation (R² Score & RMSE)
+We evaluate model accuracy using:
+`R² Score → How well the model explains variation in Profit.
+Root Mean Squared Error (RMSE) → Error between predicted and actual profit.`
+```python
+# Import metrics
+from sklearn.metrics import r2_score, mean_squared_error  
+
+# Compute R² Score & RMSE
+r2_train = r2_score(y_train, y_pred_train)  
+r2_test = r2_score(y_test, y_pred_test)  
+rmse_train = mean_squared_error(y_train, y_pred_train, squared=False)  
+rmse_test = mean_squared_error(y_test, y_pred_test, squared=False)
+
+# Display results
+r2_train, r2_test, rmse_train, rmse_test
+```
+```(0.954, 0.899, 8927.49, 9055.96)```
+```
+✅ Interpretation:
+R² (Train) = 0.954 → Model explains 95.4% of profit variance.
+R² (Test) = 0.899 → Model explains 89.9% on unseen data.
+RMSE (Train) = 8927.49, RMSE (Test) = 9055.96 → Model has small prediction error.
+Slight Overfitting → Training accuracy is slightly higher than testing.
+```
+
+
+
+
 
 
